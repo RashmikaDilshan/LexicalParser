@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Language Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Lexical Analyzer</h1>
+            
+            <nav>
+                <a href="/" class="active">Analyzer</a>
+                <a href="/grammar">Grammar</a>
+                <a href="/tokens">Tokens</a>
+                <a href="/testcases">Test Cases</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <h2>Input Program</h2>
+                <div class="input-group">
+                    <textarea id="inputExpr" rows="8" 
+                              placeholder="e.g: if (x > 0) { y = x * 2; }"
+                              style="width: 100%; font-family: 'Courier New', monospace; padding: 15px; border: 2px solid #667eea; border-radius: 8px;"></textarea>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button id="analyzeBtn" onclick="analyzeExpression()">
+                        ▶️ Analyze
+                    </button>
+                    <button onclick="clearInput()" style="background: #ed4859;">
+                        🗑️ Clear
+                    </button>
+                </div>
+                
+                <div class="test-cases">
+                    <strong>Quick Examples:</strong>
+                    <button onclick="setInput('x = 5;')">Assignment</button>
+                    <button onclick="setInput('if (x > 0) { y = 1; }')">If Statement</button>
+                    <button onclick="setInput('while (i < 10) { i = i + 1; }')">While Loop</button>
+                    <button onclick="setInput('for (i = 0; i < 10; i = i + 1) { sum = sum + i; }')">For Loop</button>
+                    <button onclick="setInput('def add(a, b) { return a + b; }')">Function</button>
+                    <button onclick="setInput('result = add(3, 5);')">Function Call</button>
+                    <button onclick="loadComplexExample()">Complex Program</button>
+                </div>
+            </section>
+
+            <section id="resultsSection" style="display: none;">
+                <div id="statusBox" class="status-box"></div>
+                
+                <div id="errorsBox" class="errors-box" style="display: none;"></div>
+                
+                <div id="tokensBox" class="results-box">
+                    <h3>📝 Tokens</h3>
+                    <div id="tokensTable"></div>
+                </div>
+                
+                <div id="treeBox" class="results-box">
+                    <h3>🌳 Parse Tree</h3>
+                    <div class="tree-controls">
+                        <button onclick="showTreeFormat('visual')">Visual</button>
+                        <button onclick="showTreeFormat('ascii')">ASCII</button>
+                        <button onclick="showTreeFormat('svg')">SVG</button>
+                    </div>
+                    <div id="treeDisplay"></div>
+                </div>
+                
+                <div id="statsBox" class="results-box">
+                    <h3>📊 Statistics</h3>
+                    <div id="statsDisplay"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with Python Flask | Enhanced Recursive Descent Parser</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function clearInput() {
+            document.getElementById('inputExpr').value = '';
+            document.getElementById('resultsSection').style.display = 'none';
+        }
+
+        function loadComplexExample() {
+            const example = `def factorial(n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+x = 5;
+result = factorial(x);`;
+            setInput(example);
+        }
+    </script>
+</body>
+</html>
