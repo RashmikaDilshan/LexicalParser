@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Cases - Lexical Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 Test Cases</h1>
+            <p class="subtitle">Examples to try in the Analyzer</p>
+            <nav>
+                <a href="/">Analyzer</a>
+                <a href="/grammar">Grammar</a>
+                <a href="/tokens">Tokens</a>
+                <a href="/testcases" class="active">Test Cases</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="test-cases-section">
+                <h2>Test Cases</h2>
+                
+                <div class="test-cases-grid">
+                    <div class="test-case-box valid-box">
+                        <h3>✓ Valid Inputs</h3>
+                        <ul>
+                            {% for test in test_cases.valid %}
+                            <li><code>{{ test }}</code></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="test-case-box invalid-box">
+                        <h3>✗ Invalid Inputs</h3>
+                        <ul>
+                            {% for test in test_cases.invalid %}
+                            <li><code>{{ test }}</code></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with Python Flask | PLY Lexer & Parser</p>
+        </footer>
+    </div>
+
+    
+</body>
+</html>
