@@ -26,6 +26,7 @@ Python project providing a lexical analyzer and recursive-descent parser for a c
 Prerequisites
 - Python 3.10+ recommended
 - pip
+- first clone the repo
 
 Create a virtual environment (recommended):
 
