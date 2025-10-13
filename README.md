@@ -2,14 +2,14 @@
 
 Python project providing a lexical analyzer and recursive-descent parser for a custom grammar. This repository contains the backend code used by a simple web UI for visualizing tokens and parse trees.
 
-## Features
+# Features
 
 - Tokenizer / lexer
 - Recursive descent parser
 - Web frontend (Flask) serving static HTML/CSS/JS to interact with the parser
 - Utilities for error handling and visualization
 
-## Repository Structure
+# Repository Structure
 
 - `app.py` - Flask application entrypoint
 - `config.py` - Application configuration
@@ -21,46 +21,40 @@ Python project providing a lexical analyzer and recursive-descent parser for a c
 - `requirements.txt` - Python dependencies
 - `text_analyzer.py` - (Top-level script, likely for CLI/testing)
 
-## Quick Start
+# Quick Start
 
-Prerequisites
+**Prerequisites**
 - Python 3.10+ recommended
 - pip
-# 1. first clone the repo
 
-# 2. Create virtual environment
+## 1. First, clone the repo
+
+## 2. Create a virtual environment
 ```bash
 python -m venv venv
 source venv/bin/activate  # Mac/Linux
 ```
-# OR
+### OR
 ```
 venv\Scripts\activate     # Windows
 ```
-# 3. Install dependencies
+## 3. Install dependencies
 ```
 pip install -r requirements.txt
 ```
-# 7. Run the application
+## 4. Run the application
 ```
 python app.py
 ```
-# OR
+### OR
 ```bash
 export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```
+## 5. Open browser & Navigate to http://localhost:3000
 
-# 8. Open browser & Navigate to http://localhost:3000
 
-
-## Tests
+# Tests
 
 There are no automated tests included in this repo currently. Adding unit tests for the tokenizer and parser is highly recommended.
-
-## Notes & Next Steps
-
-- Add unit tests for `lexer/tokenizer.py` and the parser in `parser/`.
-- Add CI (GitHub Actions) to run tests and linters on push.
-- Consider packaging the parser as a library with a `setup.cfg`/`pyproject.toml`.
