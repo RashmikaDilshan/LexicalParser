@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Rules - Lexical Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Grammar Productions</h1>
+            
+            <nav>
+                <a href="/">Analyzer</a>
+                <a href="/grammar" class="active">Grammar</a>
+                <a href="/tokens">Tokens</a>
+                <a href="/testcases">Test Cases</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="grammar-section">
+                <h2>Production Rules</h2>
+                <div class="grammar-box">
+                    {% for rule in grammar_rules %}
+                    <div class="grammar-rule">
+                        <span class="lhs">{{ rule.lhs }}</span>
+                        <span class="arrow">→</span>
+                        <span class="rhs">{{ rule.rhs }}</span>
+                        {% if rule.description %}
+                        <span class="description">// {{ rule.description }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="explanation-section">
+                <h2>How Lexical Analysis Works</h2>
+                
+                <div class="step-box">
+                    <h3>1. Tokenization (Lexical Analysis)</h3>
+                    <p>The input string is scanned character by character to identify <strong>lexemes</strong> (smallest meaningful units). Each lexeme is classified into a token type.</p>
+                    <div class="example">
+                        <strong>Example:</strong> Input "a+b*c"<br>
+                        Tokens: [ID(a), PLUS(+), ID(b), MULTIPLY(*), ID(c)]
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h3>2. Token Classification</h3>
+                    <p>Identified lexemes are mapped to their corresponding token types:</p><br>
+                    <ul>
+                        <li><strong>Operators:</strong> +, -, *, /, %, **</li>
+                        <li><strong>Delimiters:</strong> ( ) { } ; :</li>
+                        <li><strong>Identifiers:</strong> Variable names</li>
+                        <li><strong>Literals:</strong> Numbers (integers and floats)</li>
+                        <li><strong>Keywords:</strong> if, else, while, for, def, return</li>
+                    </ul>
+                </div>
+
+                <div class="step-box">
+                    <h3>3. Syntax Analysis (Parsing)</h3>
+                    <p>Tokens are analyzed using the grammar productions to build a <strong>parse tree</strong>. The parser checks if the input follows the grammar rules using recursive descent.</p>
+                    <div class="example">
+                        <strong>Parse Tree for "a+b*c":</strong><br>
+                        <pre>
+E
+├── T
+│   └── F
+│       └── P
+│           └── id(a)
+└── E'
+    ├── +
+    ├── T
+    │   ├── F
+    │   │   └── P
+    │   │       └── id(b)
+    │   └── T'
+    │       ├── *
+    │       ├── F
+    │       │   └── P
+    │       │       └── id(c)
+    │       └── T'
+    │           └── ε
+    └── E'
+        └── ε
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h3>4. Error Detection</h3>
+                    <p>The analyzer detects and reports:</p><br>
+                    <ul>
+                        <li><strong>Lexical Errors:</strong> Unknown characters, invalid number formats</li>
+                        <li><strong>Syntax Errors:</strong> Grammar violations, missing operators/operands</li>
+                        <li><strong>Semantic Errors:</strong> Division by zero, type mismatches</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="precedence-section">
+                <h2>Operator Precedence</h2>
+                <table class="precedence-table">
+                    <thead>
+                        <tr>
+                            <th>Precedence</th>
+                            <th>Operators</th>
+                            <th>Associativity</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 (Highest)</td>
+                            <td>**</td>
+                            <td>Right</td>
+                            <td>Exponentiation</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>*, /, %</td>
+                            <td>Left</td>
+                            <td>Multiplication, Division, Modulo</td>
+                        </tr>
+                        <tr>
+                            <td>3 (Lowest)</td>
+                            <td>+, -</td>
+                            <td>Left</td>
+                            <td>Addition, Subtraction</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="example">
+                    <strong>Example:</strong> 2 + 3 * 4 ** 2<br>
+                    Evaluation: 2 + 3 * (4 ** 2) = 2 + 3 * 16 = 2 + 48 = 50
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with Python Flask | PLY Lexer & Parser</p>
+        </footer>
+    </div>
+</body>
+</html>
