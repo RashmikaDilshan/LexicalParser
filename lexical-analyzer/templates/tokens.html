@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Types - Lexical Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+            <header>
+            <h1>🏷️ Token Types</h1>
+            <p class="subtitle">Complete Token Classification</p>
+            <nav>
+                <a href="/">Analyzer</a>
+                <a href="/grammar">Grammar</a>
+                <a href="/tokens" class="active">Tokens</a>
+                <a href="/testcases">Test Cases</a>
+            </nav>
+        </header>
+
+        <main>
+            
+
+            <section class="patterns-section">
+                <h2>Token Patterns</h2>
+                
+                <div class="pattern-box">
+                    <h3>Identifiers (ID)</h3>
+                    <p><strong>Pattern:</strong> <code>letter (letter | digit | _)*</code></p>
+                    <p><strong>Description:</strong> Must start with a letter or underscore, followed by any combination of letters, digits, or underscores.</p>
+                    <div class="examples">
+                        <span class="valid">✓ a</span>
+                        <span class="valid">✓ x123</span>
+                        <span class="valid">✓ _temp</span>
+                        <span class="valid">✓ myVar</span>
+                        <span class="invalid">✗ 123abc</span>
+                        <span class="invalid">✗ @var</span>
+                    </div>
+                </div>
+
+                <div class="pattern-box">
+                    <h3>Numbers (NUMBER)</h3>
+                    <p><strong>Pattern:</strong> <code>digit+ | digit+.digit+</code></p>
+                    <p><strong>Description:</strong> Integer or floating-point numbers.</p>
+                    <div class="examples">
+                        <span class="valid">✓ 123</span>
+                        <span class="valid">✓ 45.67</span>
+                        <span class="valid">✓ 0.5</span>
+                        <span class="valid">✓ 3.14159</span>
+                        <span class="invalid">✗ 12.34.56</span>
+                        <span class="invalid">✗ .123</span>
+                    </div>
+                </div>
+
+                <div class="pattern-box">
+                    <h3>Operators</h3>
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Token Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>+</td>
+                                <td>PLUS</td>
+                                <td>Addition</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>MINUS</td>
+                                <td>Subtraction</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>MULTIPLY</td>
+                                <td>Multiplication</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>DIVIDE</td>
+                                <td>Division</td>
+                            </tr>
+                            <tr>
+                                <td>%</td>
+                                <td>MODULO</td>
+                                <td>Modulo</td>
+                            </tr>
+                            <tr>
+                                <td>**</td>
+                                <td>POWER</td>
+                                <td>Exponentiation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pattern-box">
+                    <h3>Delimiters & Separators</h3>
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Token Type</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>(</td>
+                                <td>LPAREN</td>
+                                <td>Opening parenthesis</td>
+                            </tr>
+                            <tr>
+                                <td>)</td>
+                                <td>RPAREN</td>
+                                <td>Closing parenthesis</td>
+                            </tr>
+                            <tr>
+                                <td>[</td>
+                                <td>LBRACKET</td>
+                                <td>Opening square bracket</td>
+                            </tr>
+                            <tr>
+                                <td>]</td>
+                                <td>RBRACKET</td>
+                                <td>Closing square bracket</td>
+                            </tr>
+                            <tr>
+                                <td>{</td>
+                                <td>LBRACE</td>
+                                <td>Opening brace</td>
+                            </tr>
+                            <tr>
+                                <td>}</td>
+                                <td>RBRACE</td>
+                                <td>Closing brace</td>
+                            </tr>
+                            <tr>
+                                <td>,</td>
+                                <td>COMMA</td>
+                                <td>Item separator</td>
+                            </tr>
+                            <tr>
+                                <td>;</td>
+                                <td>SEMICOLON</td>
+                                <td>Statement terminator</td>
+                            </tr>
+                            <tr>
+                                <td>:</td>
+                                <td>COLON</td>
+                                <td>Label or type separator</td>
+                            </tr>
+                            <tr>
+                                <td>.</td>
+                                <td>DOT</td>
+                                <td>Member access / decimal point</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            
+
+            <section class="try-it-section">
+                <h2>Try It Now!</h2>
+                <a href="/" class="try-button">Go to Analyzer →</a>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with Python Flask | PLY Lexer & Parser</p>
+        </footer>
+    </div>
+</body>
+</html>
