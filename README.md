@@ -26,31 +26,34 @@ Python project providing a lexical analyzer and recursive-descent parser for a c
 Prerequisites
 - Python 3.10+ recommended
 - pip
-- first clone the repo
+# 1. first clone the repo
 
-Create a virtual environment (recommended):
-
+# 2. Create virtual environment
 ```bash
 python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
+source venv/bin/activate  # Mac/Linux
 ```
-
-##Run the app (development):
-
-```bash
+# OR
+```
+venv\Scripts\activate     # Windows
+```
+# 3. Install dependencies
+```
+pip install -r requirements.txt
+```
+# 7. Run the application
+```
 python app.py
 ```
-OR
-
+# OR
 ```bash
 export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```
 
-Open http://127.0.0.1:3000 in your browser.
+# 8. Open browser & Navigate to http://localhost:3000
+
 
 ## Tests
 
