@@ -27,8 +27,10 @@ Python project providing a lexical analyzer and recursive-descent parser for a c
 - Python 3.10+ recommended
 - pip
 
-## 1. First, clone the repo
-
+## 1. First, clone the repo & change the directory
+```
+cd PLCDModule/lexical-analyzer/
+```
 ## 2. Create a virtual environment
 ```bash
 python -m venv venv
