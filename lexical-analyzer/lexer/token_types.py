@@ -34,6 +34,8 @@ class TokenType:
     WHILE = 'WHILE'         # while
     FOR = 'FOR'             # for
     DEF = 'DEF'             # def
+    INT = 'INT'             # int (type)
+    FLOAT = 'FLOAT'         # float (type)
     RETURN = 'RETURN'       # return
     
     # Identifiers and Literals
@@ -73,6 +75,8 @@ KEYWORDS = {
     'while': TokenType.WHILE,
     'for': TokenType.FOR,
     'def': TokenType.DEF,
+    'int': TokenType.INT,
+    'float': TokenType.FLOAT,
     'return': TokenType.RETURN
 }
 

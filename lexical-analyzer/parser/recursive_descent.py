@@ -61,9 +61,9 @@ class RecursiveDescentParser:
     
     def parse_StatementList(self):
         node = ParseTreeNode('StatementList')
-        if self.current_token().type in [TokenType.ID, TokenType.IF, TokenType.WHILE, 
-                                         TokenType.FOR, TokenType.DEF, TokenType.RETURN, 
-                                         TokenType.LBRACE]:
+        if self.current_token().type in [TokenType.ID, TokenType.IF, TokenType.WHILE,
+                                         TokenType.FOR, TokenType.DEF, TokenType.RETURN,
+                                         TokenType.LBRACE, TokenType.INT, TokenType.FLOAT]:
             stmt = self.parse_Statement()
             if stmt:
                 node.add_child(stmt)
@@ -89,25 +89,41 @@ class RecursiveDescentParser:
             node.add_child(self.parse_ReturnStatement())
         elif token.type == TokenType.LBRACE:
             node.add_child(self.parse_Block())
+        elif token.type in (TokenType.INT, TokenType.FLOAT):
+            node.add_child(self.parse_VarDeclaration())
         elif token.type == TokenType.ID:
             node.add_child(self.parse_Assignment())
         else:
             self.errors.append(f"Unexpected token {token.type} at line {token.line}")
         return node
-    
-    def parse_Assignment(self):
-        node = ParseTreeNode('Assignment')
+
+    def parse_VarDeclaration(self):
+        """Parse variable declaration: (int|float) id (= E)? ;"""
+        node = ParseTreeNode('VarDeclaration')
+        # Type
+        typ = self.current_token()
+        if typ.type in (TokenType.INT, TokenType.FLOAT):
+            self.pos += 1
+            node.add_child(ParseTreeNode(f"type({typ.lexeme})"))
+        # identifier
         id_token = self.eat(TokenType.ID)
         if id_token:
             node.add_child(ParseTreeNode(f"id({id_token.value})"))
-        self.eat(TokenType.ASSIGN)
-        node.add_child(ParseTreeNode('='))
-        expr = self.parse_E()
-        if expr:
-            node.add_child(expr)
+        # optional initializer
+        if self.current_token().type == TokenType.ASSIGN:
+            self.eat(TokenType.ASSIGN)
+            node.add_child(ParseTreeNode('='))
+            expr = self.parse_E()
+            if expr:
+                node.add_child(expr)
+        # terminating semicolon
         self.eat(TokenType.SEMICOLON)
         node.add_child(ParseTreeNode(';'))
         return node
+    
+    def parse_Assignment(self):
+        # Backwards-compatible wrapper that requires semicolon
+        return self.parse_Assignment(require_semicolon=True)
     
     def parse_Block(self):
         node = ParseTreeNode('Block')
@@ -175,7 +191,8 @@ class RecursiveDescentParser:
         node.add_child(ParseTreeNode('('))
         # init part: optional assignment
         if self.current_token().type == TokenType.ID:
-            init = self.parse_Assignment()
+            # inside for-header, assignment should not consume the trailing semicolon
+            init = self.parse_Assignment(require_semicolon=False)
             if init:
                 node.add_child(init)
         else:
@@ -200,7 +217,8 @@ class RecursiveDescentParser:
 
         # increment part: optional assignment/expression
         if self.current_token().type == TokenType.ID:
-            incr = self.parse_Assignment()
+            # increment often appears as an expression or assignment without semicolon
+            incr = self.parse_Assignment(require_semicolon=False)
             if incr:
                 node.add_child(incr)
         else:
